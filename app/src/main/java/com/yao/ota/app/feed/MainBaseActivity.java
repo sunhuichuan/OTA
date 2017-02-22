@@ -1,4 +1,4 @@
-package com.yao.ota.feed;
+package com.yao.ota.app.feed;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,8 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.yao.dependence.ui.BaseActivity;
 import com.yao.ota.R;
-import com.yao.ota.activity.BaseActivity;
 
 public abstract class MainBaseActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -96,8 +96,13 @@ public abstract class MainBaseActivity extends BaseActivity
 
         }
 
+        onClickMenuItem(item);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    protected abstract void onClickMenuItem(MenuItem item);
+
 }

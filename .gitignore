@@ -50,6 +50,8 @@ captures/
 
 # User-specific stuff:
 .idea/
+devsdk/
+dependence/
 
 
 # Mongo Explorer plugin:
