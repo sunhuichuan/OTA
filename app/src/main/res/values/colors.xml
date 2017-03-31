@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="divider_line_color">#e6e6e6</color>
+    <!-- switchButton 开启的颜色-->
+    <color name="switch_button_on_color">#ff8c1a</color>
+    <color name="switch_button_off_color">@color/text_color_tertiary</color>
 </resources>

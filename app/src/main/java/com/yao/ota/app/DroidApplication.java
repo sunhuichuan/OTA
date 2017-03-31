@@ -7,6 +7,7 @@ import com.yao.devsdk.log.LogUtil;
 import com.yao.devsdk.utils.ProcessUtils;
 import com.yao.ota.R;
 import com.yao.ota.app.constant.XConstants;
+import com.yao.ota.app.tools.PrefsTools;
 
 public class DroidApplication extends Application {
 	private static final String TAG = "AppApplication";
@@ -48,7 +49,8 @@ public class DroidApplication extends Application {
 
 
 	private void initApp() {
-
+		//进程挂了重启，开关一定是关闭的
+		PrefsTools.getInstance().is_forbid_video_ad.setVal(false).apply();
 
 
 	}

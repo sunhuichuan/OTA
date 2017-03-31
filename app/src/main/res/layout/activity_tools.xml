@@ -1,19 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_about_device"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context=".app.activity.ToolsActivity">
 
-    <TextView android:layout_width="match_parent"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="本机工具信息"/>
+        android:text="本机工具信息" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="目前无用开关" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_forbid_video_ad"
+            style="@style/SwitchButtonStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+    </LinearLayout>
+
+    <View style="@style/divider_line_style" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="其他开关" />
+
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_debug_enter_source_page"
+            style="@style/SwitchButtonStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+    </LinearLayout>
+
+    <View style="@style/divider_line_style" />
 
 
 </LinearLayout>

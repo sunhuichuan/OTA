@@ -32,6 +32,7 @@ dependencies {
     compile 'in.srain.cube:cube-sdk:1.0.44@aar'
     compile 'com.mcxiaoke.volley:library:1.0.17'
     compile 'com.makeramen:roundedimageview:2.2.1'
+    compile 'com.kyleduo.switchbutton:library:1.4.5'
     compile 'org.jsoup:jsoup:1.10.2'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
