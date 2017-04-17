@@ -1,7 +1,7 @@
 package com.yao.ota.app.base.network.request;
 
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.yao.devsdk.log.LogUtil;
+import com.yao.devsdk.log.LoggerUtil;
 import com.yao.ota.app.base.network.manager.RequestManager;
 import com.yao.ota.app.base.network.toolbox.SimpleRequestCallback;
 
@@ -70,7 +70,7 @@ import java.util.Map;
 
         @Override
         public void onResponse(JSONObject response) {
-            LogUtil.i(TAG,"收到的响应结果："+response.toString());
+            LoggerUtil.i(TAG,"收到的响应结果："+response.toString());
             if (null != mListener) {
                 mListener.onResponse(response);
             }

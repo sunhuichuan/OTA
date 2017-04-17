@@ -4,7 +4,7 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.yao.devsdk.log.LogUtil;
+import com.yao.devsdk.log.LoggerUtil;
 import com.yao.ota.app.base.network.manager.RequestManager;
 
 import java.util.HashMap;
@@ -77,7 +77,7 @@ public class HttpStringRequest extends HttpRequest {
 
         @Override
         public void onResponse(String response) {
-            LogUtil.i(TAG, "收到的响应结果：" + response);
+            LoggerUtil.i(TAG, "收到的响应结果：" + response);
             if (null != mListener) {
                 mListener.onResponse(response);
             }
@@ -91,7 +91,7 @@ public class HttpStringRequest extends HttpRequest {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            LogUtil.i(TAG, "收到结果错误：" + error);
+            LoggerUtil.i(TAG, "收到结果错误：" + error);
             if (null != mListener) {
                 mListener.onErrorResponse(error);
             }

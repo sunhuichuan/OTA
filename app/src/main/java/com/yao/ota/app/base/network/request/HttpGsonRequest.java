@@ -2,7 +2,7 @@ package com.yao.ota.app.base.network.request;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.yao.devsdk.log.LogUtil;
+import com.yao.devsdk.log.LoggerUtil;
 import com.yao.ota.app.base.network.manager.RequestManager;
 import com.yao.ota.app.base.network.toolbox.SimpleRequestCallback;
 import com.yao.ota.app.constant.XConstants;
@@ -76,7 +76,7 @@ public abstract class HttpGsonRequest<T> extends HttpRequest {
         public void onResponse(JSONObject response) {
             if (XConstants.DEBUG) {
                 //HttpGetRequest$1 个什么东西？哪个内部类？应该是Listener<JSONObject>
-                LogUtil.i(TAG, "this是：" + this.getClass());
+                LoggerUtil.i(TAG, "this是：" + this.getClass());
             }
             if (mListener != null) {
                 T result = GsonHelper.parse(response.toString(), mType);

@@ -1,6 +1,6 @@
 package com.yao.ota.app.base.network.utils;
 
-import com.yao.devsdk.log.LogUtil;
+import com.yao.devsdk.log.LoggerUtil;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -70,7 +70,7 @@ public class NetParamsUtils {
                 }
             }
         } catch (Exception e) {
-            LogUtil.e(TAG, "拼接URL异常", e);
+            LoggerUtil.e(TAG, "拼接URL异常", e);
         }
 
         return assmbleUrl;

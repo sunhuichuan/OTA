@@ -3,7 +3,7 @@ package com.yao.ota.app;
 import android.app.Application;
 import android.content.Context;
 import com.yao.devsdk.SdkConfig;
-import com.yao.devsdk.log.LogUtil;
+import com.yao.devsdk.log.LoggerUtil;
 import com.yao.devsdk.utils.ProcessUtils;
 import com.yao.ota.R;
 import com.yao.ota.app.constant.XConstants;
@@ -29,7 +29,7 @@ public class DroidApplication extends Application {
 				initApp();
 			}
 		} catch (Exception e) {
-			LogUtil.e(TAG, "初始化application init异常", e);
+			LoggerUtil.e(TAG, "初始化application init异常", e);
 		}
 
 	}

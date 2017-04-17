@@ -15,7 +15,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.yao.dependence.event.WeiXinLoginEvent;
 import com.yao.dependence.sso.WeixinSDK;
-import com.yao.devsdk.log.LogUtil;
+import com.yao.devsdk.log.LoggerUtil;
 import com.yao.devsdk.utils.SdkUtil;
 
 import de.greenrobot.event.EventBus;
@@ -34,14 +34,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         super.onCreate(savedInstanceState);
         TextView tv_content = new TextView(this);
         setContentView(tv_content);
-        LogUtil.e(TAG, "onCreate了了了了了");
+        LoggerUtil.e(TAG, "onCreate了了了了了");
         processData();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        LogUtil.e(TAG, "onNewIntent了了了了了");
+        LoggerUtil.e(TAG, "onNewIntent了了了了了");
         setIntent(intent);
         processData();
     }
@@ -72,11 +72,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp resp) {
-        LogUtil.e(TAG,"微信返回的数据为："+resp);
+        LoggerUtil.e(TAG,"微信返回的数据为："+resp);
 
 
         if(resp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){
-            LogUtil.d(TAG,"onPayFinish,errCode="+resp.errCode);
+            LoggerUtil.d(TAG,"onPayFinish,errCode="+resp.errCode);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("啥啥啥");
         }

@@ -1,6 +1,6 @@
 package com.yao.ota.app.base.network.toolbox;
 
-import com.yao.devsdk.log.LogUtil;
+import com.yao.devsdk.log.LoggerUtil;
 import com.yao.ota.app.base.network.request.HttpRequest;
 
 /**
@@ -14,11 +14,11 @@ public class SimpleRequestCallback<T> implements HttpRequest.RequestCallback<T> 
 
     @Override
     public void onResponse(T response) {
-        LogUtil.i(TAG,"请求成功:"+(response==null?"--空--":response));
+        LoggerUtil.i(TAG,"请求成功:"+(response==null?"--空--":response));
     }
 
     @Override
     public void onErrorResponse(Exception exception) {
-        LogUtil.i(TAG,"请求异常",exception);
+        LoggerUtil.i(TAG,"请求异常",exception);
     }
 }

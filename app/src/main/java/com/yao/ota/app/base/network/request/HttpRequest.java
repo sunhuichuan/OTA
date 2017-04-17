@@ -8,9 +8,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.yao.devsdk.log.LogUtil;
+import com.yao.devsdk.log.LoggerUtil;
 import com.yao.ota.app.DroidApplication;
-import com.yao.ota.app.base.BaseRequest;
+import com.yao.ota.app.base.network.BaseRequest;
 import com.yao.ota.app.base.network.manager.RequestManager;
 import com.yao.ota.app.base.network.utils.NetParamsUtils;
 
@@ -126,12 +126,12 @@ public abstract class HttpRequest {
                 requestUrl = NetParamsUtils.assemblePathWithParams(mRequestPath, getExtraParams());
             }
 
-            LogUtil.i(TAG,"get请求的url:"+requestUrl);
+            LoggerUtil.i(TAG,"get请求的url:"+requestUrl);
             request = new JsonObjectRequest(Request.Method.GET,requestUrl, successListener, errorListener);
         }else if (mRequestMethod == Request.Method.POST){
 
             String requestUrl = (!TextUtils.isEmpty(mRequestUrl))?mRequestUrl:NetParamsUtils.getToggleUrl(mRequestPath);
-            LogUtil.i(TAG,"post请求的url:"+requestUrl);
+            LoggerUtil.i(TAG,"post请求的url:"+requestUrl);
             request = new JsonObjectRequest(Request.Method.POST,requestUrl, successListener, errorListener){
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {

@@ -1,7 +1,7 @@
 package com.yao.ota.app.utils;
 
 import com.google.gson.Gson;
-import com.yao.devsdk.log.LogUtil;
+import com.yao.devsdk.log.LoggerUtil;
 
 import java.lang.reflect.Type;
 
@@ -20,7 +20,7 @@ public class GsonHelper {
             try {
                 data = INSTANCE.fromJson(strDataJson, classOfT);
             } catch (Exception e) {
-                LogUtil.e(TAG,"Exception:",e);
+                LoggerUtil.e(TAG,"Exception:",e);
             }
         }
         return data;
@@ -31,7 +31,7 @@ public class GsonHelper {
             try {
                 data = INSTANCE.fromJson(strDataJson, typeOfT);
             } catch (Exception e) {
-                LogUtil.e(TAG,"Exception:",e);
+                LoggerUtil.e(TAG,"Exception:",e);
             }
         }
         return data;
@@ -44,7 +44,7 @@ public class GsonHelper {
             strDataJson = new String(dataJson, "utf-8");
             data = parse(strDataJson, classOfT);
         } catch (Exception e) {
-            LogUtil.e(TAG,"Exception:",e);
+            LoggerUtil.e(TAG,"Exception:",e);
         }
         return data;
     }
