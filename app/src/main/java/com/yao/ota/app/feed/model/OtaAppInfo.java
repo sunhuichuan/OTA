@@ -4,7 +4,7 @@ package com.yao.ota.app.feed.model;
  * Ota的app实体bean
  * Created by huichuan on 2017/4/12.
  */
-public class OtaAppInfo {
+public class OtaAppInfo extends OtaInfo{
 
     //app的发布时间
     private String publishTime;

@@ -1,6 +1,7 @@
 package com.yao.ota.app.feed.utils;
 
 import com.yao.ota.app.feed.model.OtaAppInfo;
+import com.yao.ota.app.feed.model.OtaInfo;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -53,14 +54,14 @@ public class AppFeedParseUtils {
      * @param document
      * @return
      */
-    public static List<OtaAppInfo> parseAppList(Document document){
+    public static List<OtaInfo> parseAppList(Document document){
         Element body = document.body();
         Element appTypeTable = body.getElementsByTag("table").get(1);
         Elements appTypeList = appTypeTable.getElementsByTag("tbody").get(0).getElementsByTag("tr");
 //        LoggerUtil.i(TAG,"appTypeList:"+appTypeList);
 
         int appListSize = appTypeList.size();
-        List<OtaAppInfo> appList = new ArrayList<>();
+        List<OtaInfo> appList = new ArrayList<>();
         //第0行是标题，所以跳过
         for (int i=1;i<appListSize;i++){
             Element elementApp = appTypeList.get(i);
