@@ -88,18 +88,13 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
 
         @Override
         public Fragment getItem(int position) {
-            return new FragmentOtaApp();
-
-//            switch (position) {
-//                case 0:
-//                    return new FragmentOtaApp();
-//                case 1:
-//                    return new FragmentOtaApp();
-//                case 2:
-//                    return new FragmentOtaApp();
-//                default:
-//                    return new FragmentOtaApp();
-//            }
+            switch (position) {
+                case 0:
+                    return FragmentOtaApp.newInstance("99");
+                default:
+                    //其他的都是按position来命名type的
+                    return FragmentOtaApp.newInstance(String.valueOf(position-1));
+            }
         }
         @Override
         public CharSequence getPageTitle(int position) {
