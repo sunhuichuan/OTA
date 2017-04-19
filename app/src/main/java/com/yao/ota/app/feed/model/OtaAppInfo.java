@@ -18,6 +18,8 @@ public class OtaAppInfo extends OtaInfo{
     private String deleteActionUrl;
 
     public OtaAppInfo(){
+        //app类型，设置type值
+        setType(INFO_TYPE_APP);
     }
 
     public String getPublishTime() {

@@ -11,6 +11,8 @@ public class AppListContract {
     public interface View extends BaseView<Presenter> {
         //app列表的类型名字
         String getAppTypeName();
+        //显示toast
+        void showSnackToast(String toastText);
 
         /**
          * 设置appInfo集合

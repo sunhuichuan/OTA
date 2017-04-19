@@ -16,6 +16,7 @@ public class AppCardViewHolder extends FeedViewHolder {
     public View item;
     public TextView tv_app_version;
     public TextView tv_app_description;
+    public TextView tv_app_publish_time;
 
 
     public static AppCardViewHolder getInstance(ViewGroup parent) {
@@ -29,6 +30,7 @@ public class AppCardViewHolder extends FeedViewHolder {
         item = view;
         tv_app_version = (TextView) view.findViewById(R.id.tv_app_version);
         tv_app_description = (TextView) view.findViewById(R.id.tv_app_description);
+        tv_app_publish_time = (TextView) view.findViewById(R.id.tv_app_publish_time);
     }
 
 
@@ -46,5 +48,6 @@ public class AppCardViewHolder extends FeedViewHolder {
             appDescription = "缺少描述";
         }
         tv_app_description.setText(appDescription);
+        tv_app_publish_time.setText("发布时间："+appInfo.getPublishTime());
     }
 }

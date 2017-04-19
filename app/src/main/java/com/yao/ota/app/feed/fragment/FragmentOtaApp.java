@@ -75,7 +75,7 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
                     Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(appInfo.getAppDownloadUrl()));
                     thisContext.startActivity(it);
                 }else{
-                    Snackbar.make(view, "Click to load more "+view.getTag(), Snackbar.LENGTH_LONG).show();
+//                    Snackbar.make(view, "Click to load more "+view.getTag(), Snackbar.LENGTH_LONG).show();
                     appListPresenter.loadMore();
                 }
             }
@@ -103,6 +103,13 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
             appTypeName = arguments.getString(ARGS_KEY_TYPE_NAME);
         }
         return appTypeName;
+    }
+
+    @Override
+    public void showSnackToast(String toastText) {
+        //显示toast
+        Snackbar.make(recyclerView, toastText, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 
     @Override

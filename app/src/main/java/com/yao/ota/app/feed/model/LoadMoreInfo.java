@@ -9,6 +9,7 @@ public class LoadMoreInfo extends OtaInfo {
     private String loadMoreText;
 
     public LoadMoreInfo(String text){
+        setType(INFO_TYPE_LOAD_MORE);
         loadMoreText = text;
     }
 

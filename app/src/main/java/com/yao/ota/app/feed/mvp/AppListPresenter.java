@@ -1,5 +1,7 @@
 package com.yao.ota.app.feed.mvp;
 
+import android.support.design.widget.Snackbar;
+
 import com.android.volley.Request;
 import com.yao.devsdk.log.LoggerUtil;
 import com.yao.ota.app.base.network.request.HttpRequest;
@@ -57,15 +59,25 @@ public class AppListPresenter implements AppListContract.Presenter {
                 Document parse = Jsoup.parse(response);
                 LoggerUtil.i(TAG, "document:" + parse);
 
-                List<OtaInfo> appList = AppFeedParseUtils.parseAppList(parse);
-
+                List<OtaInfo> appList = null;
+                try {
+                    appList = AppFeedParseUtils.parseAppList(parse);
+                } catch (Exception e) {
+                    LoggerUtil.e(TAG,"异常",e);
+                }
                 LoggerUtil.e(TAG,"appName:"+appList);
-                if (loadPageNumber == 0){
-                    //第一次加载
-                    view.setAppInfoList(appList);
+
+                if (appList!=null){
+                    if (loadPageNumber == 0){
+                        //第一次加载
+                        view.setAppInfoList(appList);
+                    }else{
+                        //loadmore
+                        view.addAppInfoListToAdapter(appList);
+                    }
                 }else{
-                    //loadmore
-                    view.addAppInfoListToAdapter(appList);
+                    view.showSnackToast("该类型没有更多App");
+
                 }
             }
 
