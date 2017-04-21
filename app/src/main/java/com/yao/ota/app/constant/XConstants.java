@@ -7,5 +7,5 @@ package com.yao.ota.app.constant;
 
 public class XConstants {
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 }

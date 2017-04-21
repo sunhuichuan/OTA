@@ -1,6 +1,8 @@
 package com.yao.ota.app.feed;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.yao.dependence.utils.DialogUtils;
+import com.yao.devsdk.SdkConfig;
 import com.yao.devsdk.adapter.AceAdapter;
 import com.yao.devsdk.imageloader.ImageLoaderManager;
 import com.yao.devsdk.imageloader.ImageOption;
@@ -27,8 +31,10 @@ import com.yao.ota.app.base.network.request.HttpRequest;
 import com.yao.ota.app.base.network.request.HttpStringRequest;
 import com.yao.ota.app.feed.controller.FeedContainerController;
 import com.yao.ota.app.feed.model.OtaAppCategory;
+import com.yao.ota.app.feed.model.OtaAppInfo;
 import com.yao.ota.app.feed.utils.AppFeedParseUtils;
 import com.yao.ota.app.tools.layout.ToolsContainerLayout;
+import com.yao.ota.app.upgrade.UpgradeManager;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -72,6 +78,41 @@ public class MainActivity extends MainBaseActivity {
 
         initAppList();
 
+        checkUpdate();
+
+    }
+
+    /**
+     * 检查版本更新
+     */
+    private void checkUpdate() {
+        UpgradeManager.getInstance().checkUpgrade(new HttpRequest.RequestCallback<OtaAppInfo>() {
+            @Override
+            public void onResponse(final OtaAppInfo appInfo) {
+                try {
+                    String appVersionName = appInfo.getAppVersionName();
+                    int splitIndex = appVersionName.lastIndexOf("_");
+                    String versionCode = appVersionName.substring(splitIndex+1);
+                    if (Integer.parseInt(versionCode) > SdkConfig.versionCode){
+                        //有新版本
+                        DialogUtils.showDialog(thisContext, "提示", "OTA有新版本，赶快更新", "立即升级", "下次再说", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(appInfo.getAppDownloadUrl()));
+                                thisContext.startActivity(it);
+                            }
+                        }, null);
+                    }
+                } catch (Exception e) {
+                    LoggerUtil.e(TAG,"检查新版本异常",e);
+                }
+            }
+
+            @Override
+            public void onErrorResponse(Exception error) {
+                LoggerUtil.e(TAG,"检查新版本异常",error);
+            }
+        });
     }
 
     //注册接受配置的layout

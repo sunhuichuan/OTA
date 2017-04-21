@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="100dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
+    android:minHeight="100dp"
     app:cardCornerRadius="7dp"
     app:cardElevation="7dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/tv_app_version"
@@ -33,6 +33,7 @@
             android:text="TextView"
             android:textColor="@color/gray_color_acacac"
             android:textSize="15sp" />
+
         <TextView
             android:id="@+id/tv_app_publish_time"
             android:layout_width="wrap_content"
@@ -43,5 +44,18 @@
             android:textSize="15sp" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+        <ImageView
+            android:id="@+id/iv_new_app_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/icon_new_app"/>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

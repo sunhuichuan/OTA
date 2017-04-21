@@ -53,6 +53,13 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
         appPagerAdapter.setAppTypeNameList(nameList);
         vp_viewpager.setAdapter(appPagerAdapter);
         tl_tabs_layout.setupWithViewPager(vp_viewpager);
+        vp_viewpager.post(new Runnable() {
+            @Override
+            public void run() {
+                //默认选择第二个tab，第二个tab存放的是正式包
+                vp_viewpager.setCurrentItem(1,false);
+            }
+        });
 
     }
 
