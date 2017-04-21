@@ -19,7 +19,7 @@ public class OtaAppInfo extends OtaInfo{
 
     public OtaAppInfo(){
         //app类型，设置type值
-        setType(INFO_TYPE_APP);
+        setType(INFO_TYPE_APP_ITEM);
     }
 
     public String getPublishTime() {

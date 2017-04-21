@@ -31,6 +31,7 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
     private TabLayout tl_tabs_layout;
     //显示app集合的ViewPager
     private ViewPager vp_viewpager;
+    private AppPagerAdapter appPagerAdapter;
 
     public FeedContainerController(ViewGroup viewGroup,FragmentManager fm) {
         rootView = viewGroup;
@@ -44,9 +45,13 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
     /**
      * 填充数据
      */
-    public void inflateData(List<String> nameList){
-
-        vp_viewpager.setAdapter(new AppPagerAdapter(mFragmentManager,nameList));
+    public void inflateData(String packageName,List<String> nameList){
+        if (appPagerAdapter == null){
+            appPagerAdapter = new AppPagerAdapter(mFragmentManager);
+        }
+        appPagerAdapter.setPackageName(packageName);
+        appPagerAdapter.setAppTypeNameList(nameList);
+        vp_viewpager.setAdapter(appPagerAdapter);
         tl_tabs_layout.setupWithViewPager(vp_viewpager);
 
     }
@@ -67,12 +72,29 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
     }
 
 
-    class AppPagerAdapter extends FragmentPagerAdapter{
+    public class AppPagerAdapter extends FragmentPagerAdapter{
+        private String packageName;
+        private List<String> appTypeNameList;
 
-        List<String> appTypeNameList;
-        public AppPagerAdapter(FragmentManager fm, List<String> appTypeNameList) {
+        public AppPagerAdapter(FragmentManager fm) {
             super(fm);
+        }
+
+
+        public void setPackageName(String packageName) {
+            this.packageName = packageName;
+        }
+
+        public void setAppTypeNameList(List<String> appTypeNameList) {
             this.appTypeNameList = appTypeNameList;
+        }
+
+        /**
+         * 获取包名
+         * @return
+         */
+        public String getPackageName() {
+            return packageName;
         }
 
         @Override
@@ -90,10 +112,10 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return FragmentOtaApp.newInstance("99");
+                    return FragmentOtaApp.newInstance(this,"99");
                 default:
                     //其他的都是按position来命名type的
-                    return FragmentOtaApp.newInstance(String.valueOf(position-1));
+                    return FragmentOtaApp.newInstance(this,String.valueOf(position-1));
             }
         }
         @Override

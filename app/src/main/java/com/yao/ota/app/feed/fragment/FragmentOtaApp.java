@@ -16,6 +16,7 @@ import com.yao.dependence.widget.recycler.listener.OnRcvScrollListener;
 import com.yao.devsdk.adapter.AceRecyclerAdapter;
 import com.yao.ota.R;
 import com.yao.ota.app.feed.adapter.AppInfoListAdapter;
+import com.yao.ota.app.feed.controller.FeedContainerController;
 import com.yao.ota.app.feed.model.LoadMoreInfo;
 import com.yao.ota.app.feed.model.OtaAppInfo;
 import com.yao.ota.app.feed.model.OtaInfo;
@@ -39,14 +40,17 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
     @Bind(R.id.rv_recyclerView)
     RecyclerView recyclerView;
 
+    private String appPackageName;
     private String appTypeName;
 
+    private FeedContainerController.AppPagerAdapter appPagerAdapter;
     private AppInfoListAdapter adapter;
     private AppListContract.Presenter appListPresenter;
 
 
-    public static FragmentOtaApp newInstance(String typeName){
+    public static FragmentOtaApp newInstance(FeedContainerController.AppPagerAdapter appPagerAdapter, String typeName){
         FragmentOtaApp fragmentOtaApp = new FragmentOtaApp();
+        fragmentOtaApp.appPagerAdapter = appPagerAdapter;
         Bundle argsBundle = new Bundle();
         argsBundle.putString(ARGS_KEY_TYPE_NAME,typeName);
         fragmentOtaApp.setArguments(argsBundle);
@@ -94,6 +98,11 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
 
     @Override
     public void setPresenter(AppListContract.Presenter presenter) {
+    }
+
+    @Override
+    public String getAppPackageName() {
+        return appPagerAdapter.getPackageName();
     }
 
     @Override

@@ -9,6 +9,8 @@ import java.util.List;
 public class AppListContract {
 
     public interface View extends BaseView<Presenter> {
+        //app的包名
+        String getAppPackageName();
         //app列表的类型名字
         String getAppTypeName();
         //显示toast

@@ -1,5 +1,6 @@
 package com.yao.ota.app.feed.utils;
 
+import com.yao.ota.app.feed.model.OtaAppCategory;
 import com.yao.ota.app.feed.model.OtaAppInfo;
 import com.yao.ota.app.feed.model.OtaInfo;
 
@@ -80,4 +81,40 @@ public class AppFeedParseUtils {
 
         return appList;
     }
+
+
+
+    /**
+     * 解析app信息集合
+     * @param document
+     * @return
+     */
+    public static List<OtaAppCategory> parseAppCategoryList(Document document){
+        Element body = document.body();
+        Element appTypeTable = body.getElementsByTag("table").get(0);
+        Elements appTypeList = appTypeTable.getElementsByTag("tr");
+//        LoggerUtil.i(TAG,"appTypeList:"+appTypeList);
+
+        int appListSize = appTypeList.size();
+        List<OtaAppCategory> appList = new ArrayList<>();
+        //第0行是标题，所以跳过
+        for (int i=1;i<appListSize;i++){
+            Element elementApp = appTypeList.get(i);
+            OtaAppCategory appInfo = new OtaAppCategory();
+            Elements appAttribute = elementApp.getElementsByTag("td");
+            String iconImageUrl = appAttribute.get(0).getElementsByTag("a").get(0).getElementsByTag("img").get(0).attr("src");
+            String packageName = appAttribute.get(1).text();
+            String appName = appAttribute.get(2).text();
+            appInfo.setLogoUrl(iconImageUrl);
+            appInfo.setPackageName(packageName);
+            appInfo.setAppName(appName);
+            appList.add(appInfo);
+        }
+
+        return appList;
+    }
+
+
+
+
 }

@@ -1,12 +1,9 @@
 package com.yao.ota.app.feed.mvp;
 
-import android.support.design.widget.Snackbar;
-
 import com.android.volley.Request;
 import com.yao.devsdk.log.LoggerUtil;
 import com.yao.ota.app.base.network.request.HttpRequest;
 import com.yao.ota.app.base.network.request.HttpStringRequest;
-import com.yao.ota.app.feed.model.LoadMoreInfo;
 import com.yao.ota.app.feed.model.OtaInfo;
 import com.yao.ota.app.feed.utils.AppFeedParseUtils;
 
@@ -50,7 +47,7 @@ public class AppListPresenter implements AppListContract.Presenter {
      * 从服务器请求数据
      */
     private void requestDataFromServer(){
-        String requestUrl = "http://ota.client.weibo.cn/android/packages/com.sina.app.weiboheadline?page="+loadPageNumber+"&pkg_type="+appTypeName;
+        String requestUrl = "http://ota.client.weibo.cn/android/packages/"+view.getAppPackageName()+"?page="+loadPageNumber+"&pkg_type="+appTypeName;
 
         HttpStringRequest request = new HttpStringRequest(Request.Method.GET, requestUrl, new HttpRequest.RequestCallback<String>() {
             @Override

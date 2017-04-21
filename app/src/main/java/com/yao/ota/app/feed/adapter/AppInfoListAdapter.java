@@ -20,7 +20,7 @@ public class AppInfoListAdapter extends AceRecyclerAdapter<OtaInfo,FeedViewHolde
 
     @Override
     public FeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        if (viewType == OtaInfo.INFO_TYPE_APP){
+        if (viewType == OtaInfo.INFO_TYPE_APP_ITEM){
             return AppCardViewHolder.getInstance(parent);
         }else{
             return LoadMoreViewHolder.getInstance(parent);
@@ -47,7 +47,7 @@ public class AppInfoListAdapter extends AceRecyclerAdapter<OtaInfo,FeedViewHolde
         if (position == (getItemCount()-1)){
             return OtaInfo.INFO_TYPE_LOAD_MORE;
         }else{
-            return OtaInfo.INFO_TYPE_APP;
+            return OtaInfo.INFO_TYPE_APP_ITEM;
         }
     }
 }
