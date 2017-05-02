@@ -247,6 +247,12 @@ public class MainActivity extends MainBaseActivity {
             showSelectAppDialog();
             return true;
         }else if (id == R.id.action_settings) {
+            //测试跳转到qq主页面
+//            startActivity(getPackageManager().getLaunchIntentForPackage("com.tencent.mobileqq"));
+
+//            String url="mqqwpa://im/chat?chat_type=wpa&uin=496398177";
+//            String url="mqqwpa://";
+//            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             return true;
         }
 

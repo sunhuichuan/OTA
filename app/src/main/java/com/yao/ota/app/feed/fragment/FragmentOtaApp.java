@@ -1,5 +1,8 @@
 package com.yao.ota.app.feed.fragment;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -7,13 +10,18 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.yao.dependence.ui.BaseFragment;
 import com.yao.dependence.widget.recycler.listener.OnRcvScrollListener;
 import com.yao.devsdk.adapter.AceRecyclerAdapter;
+import com.yao.devsdk.log.LoggerUtil;
+import com.yao.devsdk.utils.SdkUtil;
 import com.yao.ota.R;
 import com.yao.ota.app.feed.adapter.AppInfoListAdapter;
 import com.yao.ota.app.feed.controller.FeedContainerController;
@@ -67,6 +75,7 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         adapter=new AppInfoListAdapter();
         recyclerView.setAdapter(adapter);
+        registerForContextMenu(recyclerView);
 
         SpacesItemDecoration decoration=new SpacesItemDecoration(16);
         recyclerView.addItemDecoration(decoration);
@@ -82,6 +91,12 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
 //                    Snackbar.make(view, "Click to load more "+view.getTag(), Snackbar.LENGTH_LONG).show();
                     appListPresenter.loadMore();
                 }
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, int position, OtaInfo item) {
+                recyclerView.setTag(item);
+                return super.onItemLongClick(view, position, item);
             }
         });
 
@@ -119,6 +134,42 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
         //显示toast
         Snackbar.make(recyclerView, toastText, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        final OtaAppInfo appInfo = (OtaAppInfo) v.getTag();
+        MenuItem menuItem = menu.add(0, 1, Menu.NONE, "复制下载地址分享到qq");
+        menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                copyOidToClipboard(appInfo);
+                return false;
+            }
+        });
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    private void copyOidToClipboard(OtaAppInfo appInfo){
+        if (appInfo == null){
+            return;
+        }
+        ClipboardManager cm = (ClipboardManager) appContext.getSystemService(Context.CLIPBOARD_SERVICE);
+        // 将文本内容放到系统剪贴板里。
+        String content = appInfo.getAppDownloadUrl()+"\n"+appInfo.getAppVersionName()+"\n"+appInfo.getAppDescription();
+        cm.setPrimaryClip(ClipData.newPlainText(null, content));
+        SdkUtil.showToast(appContext,"复制成功，快去转发吧");
+        //打开qq
+        try {
+//            String url="mqqwpa://im/chat?chat_type=wpa&uin=123";
+//            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+
+            startActivity(thisContext.getPackageManager().getLaunchIntentForPackage("com.tencent.mobileqq"));
+        } catch (Exception e) {
+            LoggerUtil.e(TAG,"打开qq异常",e);
+        }
+
     }
 
     @Override
@@ -162,4 +213,6 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+
 }
