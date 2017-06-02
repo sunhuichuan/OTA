@@ -1,18 +1,12 @@
 package com.yao.ota.app.feed.viewholder;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yao.devsdk.utils.DisplayUtil;
-import com.yao.ota.R;
-import com.yao.ota.app.feed.model.LoadMoreInfo;
-import com.yao.ota.app.feed.model.OtaInfo;
 
 /**
  * 加载更多的ViewHolder
@@ -40,14 +34,14 @@ public class LoadMoreViewHolder extends FeedViewHolder {
         item.addView(tv_loadMore);
     }
 
-    @Override
-    public LoadMoreInfo getOtaInfo() {
-        return (LoadMoreInfo) super.getOtaInfo();
-    }
-
+//    @Override
+//    public LoadMoreInfo getOtaInfo() {
+//        return (LoadMoreInfo) super.getOtaInfo();
+//    }
+//
     @Override
     public void update() {
-        LoadMoreInfo otaInfo = getOtaInfo();
-        tv_loadMore.setText(otaInfo.getLoadMoreText());
+//        LoadMoreInfo otaInfo = getOtaInfo();
+//        tv_loadMore.setText(otaInfo.getLoadMoreText());
     }
 }

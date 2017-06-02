@@ -12,6 +12,7 @@
     tools:context=".app.activity.ToolsActivity">
 
     <TextView
+        android:id="@+id/tv_app_info"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="本机工具信息" />

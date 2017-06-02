@@ -1,6 +1,7 @@
 package com.yao.ota.app.feed.controller;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,10 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.yao.dependence.widget.feedlist.LoadingInterface;
 import com.yao.ota.R;
 import com.yao.ota.app.feed.IMainFeedLayoutConfig;
 import com.yao.ota.app.feed.fragment.FragmentOtaApp;
+import com.yao.ota.app.feed.layout.FeedContainerLayout;
 
 import java.util.List;
 
@@ -31,6 +35,8 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
     private TabLayout tl_tabs_layout;
     //显示app集合的ViewPager
     private ViewPager vp_viewpager;
+    private FeedContainerLayout fcl_feed_layout_container;
+    private LoadingInterface li_loading_layout;
     private AppPagerAdapter appPagerAdapter;
 
     public FeedContainerController(ViewGroup viewGroup,FragmentManager fm) {
@@ -38,14 +44,16 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
         mFragmentManager = fm;
         thisContext = (Activity) viewGroup.getContext();
         tl_tabs_layout = (TabLayout) rootView.findViewById(R.id.tl_tabs_layout);
+        fcl_feed_layout_container = (FeedContainerLayout) rootView.findViewById(R.id.fcl_feed_layout_container);
         vp_viewpager = (ViewPager) rootView.findViewById(R.id.vp_viewpager);
+        li_loading_layout = (LoadingInterface) rootView.findViewById(R.id.li_loading_layout);
     }
 
 
     /**
      * 填充数据
      */
-    public void inflateData(String packageName,List<String> nameList){
+    public void onRequestDataSuccess(String packageName,List<String> nameList){
         if (appPagerAdapter == null){
             appPagerAdapter = new AppPagerAdapter(mFragmentManager);
         }
@@ -61,7 +69,28 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
             }
         });
 
+        li_loading_layout.onLoadSuccess();
     }
+
+    public void onRequestData(){
+        li_loading_layout.startLoading();
+    }
+
+    public void onRequestDataError(){
+        li_loading_layout.onLoadFailed();
+    }
+
+
+    /**
+     * 重新加载数据的Listener
+     * @param reloadDataListener
+     */
+    public void setReloadDataListener(LoadingInterface.LoadingListener reloadDataListener){
+        li_loading_layout.setLoadingListener(reloadDataListener);
+    }
+
+
+
 
     @Override
     public void update(UpdateConfig updateConfig) {
@@ -69,11 +98,11 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
         if (TextUtils.equals(showingPageId,IMainFeedLayoutConfig.PAGE_ID_MAIN_FEED_APP)){
             //app列表需要显示
             tl_tabs_layout.setVisibility(View.VISIBLE);
-            vp_viewpager.setVisibility(View.VISIBLE);
+            fcl_feed_layout_container.setVisibility(View.VISIBLE);
         }else{
             //别人显示的时候，app列表隐藏
             tl_tabs_layout.setVisibility(View.GONE);
-            vp_viewpager.setVisibility(View.GONE);
+            fcl_feed_layout_container.setVisibility(View.GONE);
         }
 
     }

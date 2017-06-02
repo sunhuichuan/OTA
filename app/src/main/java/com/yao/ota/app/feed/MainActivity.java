@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.yao.dependence.utils.DialogUtils;
+import com.yao.dependence.widget.feedlist.LoadingInterface;
 import com.yao.devsdk.SdkConfig;
 import com.yao.devsdk.adapter.AceAdapter;
 import com.yao.devsdk.imageloader.ImageLoaderManager;
@@ -73,7 +74,8 @@ public class MainActivity extends MainBaseActivity {
         tcl_tools_layout_container = (ToolsContainerLayout) findViewById(R.id.tcl_tools_layout_container);
         registerLayoutConfig(tcl_tools_layout_container);
 
-
+        //TODO 在这里初始化Controller有什么问题吗？
+        initController();
         initViews(DEFAULT_PACKAGE_NAME);
 
         initAppList();
@@ -81,6 +83,31 @@ public class MainActivity extends MainBaseActivity {
         checkUpdate();
 
     }
+
+    void initController(){
+        fcc_appFeedContainerController = new FeedContainerController(contentRootView,getSupportFragmentManager());
+        fcc_appFeedContainerController.setReloadDataListener(new LoadingInterface.LoadingListener() {
+            @Override
+            public void onErrorViewClicked() {
+                initViews(DEFAULT_PACKAGE_NAME);
+            }
+
+            @Override
+            public void onNoDataViewClicked() {
+                initViews(DEFAULT_PACKAGE_NAME);
+            }
+
+            @Override
+            public void onNoNetViewClicked() {
+                initViews(DEFAULT_PACKAGE_NAME);
+            }
+        });
+
+        registerLayoutConfig(fcc_appFeedContainerController);
+    }
+
+
+
 
     /**
      * 检查版本更新
@@ -136,7 +163,16 @@ public class MainActivity extends MainBaseActivity {
 
 
 
+    private FeedContainerController getFeedContainerController(){
+        if (fcc_appFeedContainerController == null){
+            fcc_appFeedContainerController = new FeedContainerController(contentRootView,getSupportFragmentManager());
+        }
+        return fcc_appFeedContainerController;
+    }
+
     void initViews(final String packageName) {
+        fcc_appFeedContainerController.onRequestData();
+
         String requestUrl = "http://ota.client.weibo.cn/android/packages/"+packageName;
 
         HttpStringRequest request = new HttpStringRequest(Request.Method.GET, requestUrl, new HttpRequest.RequestCallback<String>() {
@@ -150,16 +186,14 @@ public class MainActivity extends MainBaseActivity {
                 LoggerUtil.e(TAG,"appName:"+appTypeNameList);
 
                 //填充ViewPager
-                if (fcc_appFeedContainerController == null){
-                    fcc_appFeedContainerController = new FeedContainerController(contentRootView,getSupportFragmentManager());
-                }
-                fcc_appFeedContainerController.inflateData(packageName,appTypeNameList);
+                getFeedContainerController().onRequestDataSuccess(packageName,appTypeNameList);
                 registerLayoutConfig(fcc_appFeedContainerController);
             }
 
             @Override
             public void onErrorResponse(Exception error) {
                 LoggerUtil.i(TAG, "错误：" + error);
+                getFeedContainerController().onRequestDataError();
             }
         });
 

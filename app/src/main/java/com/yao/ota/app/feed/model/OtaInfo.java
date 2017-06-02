@@ -14,7 +14,7 @@ public class OtaInfo {
     /**
      * 加载更多对象
      */
-    public static final int INFO_TYPE_LOAD_MORE = 2;
+//    public static final int INFO_TYPE_LOAD_MORE = 2;
 
 
     /**

@@ -18,12 +18,12 @@
         android:id="@+id/tcl_tools_layout_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="gone"/>
 
-    <include layout="@layout/activity_tools"/>
+    <!--<include layout="@layout/activity_tools"/>-->
 
 
-    </com.yao.ota.app.tools.layout.ToolsContainerLayout>
+    <!--</com.yao.ota.app.tools.layout.ToolsContainerLayout>-->
 
 
     <com.yao.ota.app.feed.layout.FeedContainerLayout
@@ -36,6 +36,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <com.yao.dependence.widget.feedlist.LoadingInterface
+            android:id="@+id/li_loading_layout"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
 
     </com.yao.ota.app.feed.layout.FeedContainerLayout>
 

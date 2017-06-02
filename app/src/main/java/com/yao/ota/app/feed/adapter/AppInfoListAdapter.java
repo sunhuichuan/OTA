@@ -44,10 +44,6 @@ public class AppInfoListAdapter extends AceRecyclerAdapter<OtaInfo,FeedViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        if (position == (getItemCount()-1)){
-            return OtaInfo.INFO_TYPE_LOAD_MORE;
-        }else{
-            return OtaInfo.INFO_TYPE_APP_ITEM;
-        }
+        return OtaInfo.INFO_TYPE_APP_ITEM;
     }
 }

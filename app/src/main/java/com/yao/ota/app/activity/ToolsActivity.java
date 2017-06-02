@@ -2,10 +2,12 @@ package com.yao.ota.app.activity;
 
 import android.content.Intent;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.kyleduo.switchbutton.SwitchButton;
 import com.yao.dependence.ui.BaseButterActivity;
 import com.yao.ota.R;
+import com.yao.ota.app.BaseConfig;
 import com.yao.ota.app.tools.PrefsTools;
 
 import butterknife.Bind;
@@ -15,6 +17,9 @@ import butterknife.Bind;
  */
 public class ToolsActivity extends BaseButterActivity implements CompoundButton.OnCheckedChangeListener {
 
+
+    @Bind(R.id.tv_app_info)
+    public TextView tv_app_info;
 
     @Bind(R.id.sb_forbid_video_ad)
     public SwitchButton sb_forbid_video_ad;
@@ -35,6 +40,8 @@ public class ToolsActivity extends BaseButterActivity implements CompoundButton.
             sb_forbid_video_ad.setChecked(true);
         }
         sb_forbid_video_ad.setOnCheckedChangeListener(this);
+
+        tv_app_info.setText("本机工具信息\n版本号："+ BaseConfig.versionName);
 
     }
 

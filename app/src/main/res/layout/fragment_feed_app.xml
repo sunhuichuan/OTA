@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recyclerView"
+    <com.yao.ota.app.feed.widget.FeedListApp
+        android:id="@+id/frv_feedList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

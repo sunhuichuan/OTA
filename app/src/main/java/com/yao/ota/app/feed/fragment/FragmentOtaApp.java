@@ -4,12 +4,10 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yao.dependence.ui.BaseFragment;
+import com.yao.dependence.widget.feedlist.FeedListBase;
 import com.yao.dependence.widget.recycler.listener.OnRcvScrollListener;
 import com.yao.devsdk.adapter.AceRecyclerAdapter;
 import com.yao.devsdk.log.LoggerUtil;
@@ -25,13 +24,12 @@ import com.yao.devsdk.utils.SdkUtil;
 import com.yao.ota.R;
 import com.yao.ota.app.feed.adapter.AppInfoListAdapter;
 import com.yao.ota.app.feed.controller.FeedContainerController;
-import com.yao.ota.app.feed.model.LoadMoreInfo;
 import com.yao.ota.app.feed.model.OtaAppInfo;
 import com.yao.ota.app.feed.model.OtaInfo;
 import com.yao.ota.app.feed.mvp.AppListContract;
 import com.yao.ota.app.feed.mvp.AppListPresenter;
-
-import java.util.List;
+import com.yao.ota.app.feed.requestcallback.FeedRequestCallback;
+import com.yao.ota.app.feed.widget.FeedListApp;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,7 +43,8 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
 
     public static final String ARGS_KEY_TYPE_NAME = "app_type_name";
 
-    @Bind(R.id.rv_recyclerView)
+    @Bind(R.id.frv_feedList)
+    FeedListApp frv_feedList;
     RecyclerView recyclerView;
 
     private String appPackageName;
@@ -72,13 +71,11 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
         ButterKnife.bind(this, view);
         appListPresenter = new AppListPresenter(this);
 
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView = frv_feedList.getListView();
         adapter=new AppInfoListAdapter();
-        recyclerView.setAdapter(adapter);
+        frv_feedList.setAdapter(adapter);
         registerForContextMenu(recyclerView);
 
-        SpacesItemDecoration decoration=new SpacesItemDecoration(16);
-        recyclerView.addItemDecoration(decoration);
 
         adapter.setOnItemClickListener(new AceRecyclerAdapter.OnItemClickListener<OtaInfo>() {
             @Override
@@ -108,6 +105,13 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
         });
 
         appListPresenter.start();
+
+        frv_feedList.setCallbacks(new FeedRequestCallback(getAppTypeName(),appPagerAdapter.getPackageName()));
+        frv_feedList.setLoadingListener(new FeedListBase.SimpleLoadingListener(frv_feedList));
+        frv_feedList.setCanLoadMore(true);
+        frv_feedList.setCanPullToLoad(false);
+        frv_feedList.startLoadData();
+
         return view;
     }
 
@@ -115,13 +119,7 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
     public void setPresenter(AppListContract.Presenter presenter) {
     }
 
-    @Override
-    public String getAppPackageName() {
-        return appPagerAdapter.getPackageName();
-    }
-
-    @Override
-    public String getAppTypeName() {
+    private String getAppTypeName() {
         Bundle arguments = getArguments();
         if (arguments!=null){
             appTypeName = arguments.getString(ARGS_KEY_TYPE_NAME);
@@ -132,7 +130,7 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
     @Override
     public void showSnackToast(String toastText) {
         //显示toast
-        Snackbar.make(recyclerView, toastText, Snackbar.LENGTH_LONG)
+        Snackbar.make(frv_feedList, toastText, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 
@@ -172,40 +170,6 @@ public class FragmentOtaApp extends BaseFragment implements AppListContract.View
 
     }
 
-    @Override
-    public void setAppInfoList(List<OtaInfo> appInfoList) {
-        appInfoList.add(new LoadMoreInfo("点击加载更多"));
-        adapter.setList(appInfoList);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void addAppInfoListToAdapter(List<OtaInfo> appInfoList) {
-        //把最后一个加载更多条目去掉
-        int count = adapter.getCount();
-        if (count>1){
-            //除了加载更多，还有其他数据
-            adapter.addAll(count-1,appInfoList);
-        }
-        adapter.notifyDataSetChanged();
-    }
-
-
-    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-        private int space;
-        public SpacesItemDecoration(int space) {
-            this.space=space;
-        }
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            outRect.left=space;
-            outRect.right=space;
-            outRect.bottom=space;
-            if(parent.getChildAdapterPosition(view)==0){
-                outRect.top=space;
-            }
-        }
-    }
 
 
     @Override
