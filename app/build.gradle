@@ -7,7 +7,7 @@ android {
         applicationId "com.yao.ota"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 100101
+        versionCode 100102
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
