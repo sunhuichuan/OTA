@@ -23,11 +23,12 @@ import java.util.List;
  */
 public class FeedRequestCallback implements FeedListBase.FeedListCallbacks {
     private static final String TAG = "FeedRequestCallback";
-
+    //typeName:是store包、正式包还是渠道构建包
     private String appTypeName;
     private String appPackageName;
     private FeedListApp feedListApp;
-    private int loadPageNumber;
+    //下一次加载更多请求数据用的页数
+    private int nextLoadPageNumber = 0;
 
     public FeedRequestCallback(String appTypeName, String appPackageName){
         this.appTypeName = appTypeName;
@@ -56,7 +57,7 @@ public class FeedRequestCallback implements FeedListBase.FeedListCallbacks {
     @Override
     public HashMap<String, String> getLoadMoreParam() {
         HashMap<String,String> params = new HashMap<>();
-        params.put("page",""+loadPageNumber);
+        params.put("page",""+ nextLoadPageNumber);
         return params;
     }
 
@@ -70,7 +71,7 @@ public class FeedRequestCallback implements FeedListBase.FeedListCallbacks {
     @Override
     public void startRequestFeed(final FeedListBase.RequestType requestType, HashMap<String, String> params) {
 
-        String requestUrl = "http://ota.client.weibo.cn/android/packages/"+appPackageName+"?page="+loadPageNumber+"&pkg_type="+appTypeName;
+        String requestUrl = "http://ota.client.weibo.cn/android/packages/"+appPackageName+"?page="+ nextLoadPageNumber +"&pkg_type="+appTypeName;
 
         HttpStringRequest request = new HttpStringRequest(Request.Method.GET, requestUrl, new HttpRequest.RequestCallback<String>() {
             @Override
@@ -91,7 +92,10 @@ public class FeedRequestCallback implements FeedListBase.FeedListCallbacks {
                     if (requestType == FeedListBase.RequestType.TYPE_LOAD_MORE){
                         //加载更多
                         //计数器加一
-                        loadPageNumber++;
+                        nextLoadPageNumber++;
+                    }else{
+                        //除了加载更多，其他类型的获取数据成功都认为是第一次获取数据成功，将loadPageNumber赋值为1
+                        nextLoadPageNumber = 1;
                     }
                     feedListApp.onLoadDataOK(requestType,appList);
                 }else{
