@@ -84,7 +84,7 @@ public class ToolsContainerLayout extends BaseFrameLayout implements IMainFeedLa
             sb_forbid_video_ad.setChecked(true);
         }
 
-        tv_app_info.setText("本机工具信息\n版本号："+ BaseConfig.versionName);
+        tv_app_info.setText("本机工具信息\n版本号："+ BaseConfig.versionName+"（"+BaseConfig.versionCode+"）");
     }
 
 

@@ -135,7 +135,11 @@ public class FeedContainerController implements IMainFeedLayoutConfig{
 
         @Override
         public int getCount() {
-            return appTypeNameList.size();
+            if (appTypeNameList == null){
+                return 0;
+            }else{
+                return appTypeNameList.size();
+            }
         }
 
         @Override

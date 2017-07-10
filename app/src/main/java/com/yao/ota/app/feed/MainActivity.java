@@ -182,12 +182,14 @@ public class MainActivity extends MainBaseActivity {
                 Document parse = Jsoup.parse(response);
                 LoggerUtil.i(TAG, "document:" + parse);
                 List<String> appTypeNameList = AppFeedParseUtils.parseAppTypeNameList(parse);
-
                 LoggerUtil.e(TAG,"appName:"+appTypeNameList);
-
-                //填充ViewPager
-                getFeedContainerController().onRequestDataSuccess(packageName,appTypeNameList);
-                registerLayoutConfig(fcc_appFeedContainerController);
+                if (appTypeNameList != null){
+                    //填充ViewPager
+                    getFeedContainerController().onRequestDataSuccess(packageName,appTypeNameList);
+                    registerLayoutConfig(fcc_appFeedContainerController);
+                }else{
+                    getFeedContainerController().onRequestDataError();
+                }
             }
 
             @Override
